@@ -1,15 +1,18 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TextInput } from 'react-native'
 import { connect } from 'react-redux'
-import { gray, red } from '../utils/colors'
+import { red, blue } from '../utils/colors'
 
 import Header from './Header'
 import SubmitButton from './SubmitButton'
 
 import { buttonText, metaText } from '../utils/fonts'
+import { addDeck } from '../actions/index'
+import { saveDeckTitle } from '../utils/api'
 
 const DUPLICATE_TITLE_ERROR =
   'Deck with same name already exists! Please try agian.'
+const EMPTY_FIELD_ERROR = 'Title cannot be empty! Please try agian.'
 
 class AddDeck extends Component {
   state = {
@@ -24,10 +27,34 @@ class AddDeck extends Component {
       return this.setState({ error: DUPLICATE_TITLE_ERROR })
     }
 
-    this.setState({ title: text })
+    this.setState({ title: text, error: '' })
   }
 
-  handleAddDeck = () => {}
+  handleAddDeck = () => {
+    const { saveDeck } = this.props
+    const { title } = this.state
+
+    if (title === '') {
+      return this.setState({
+        error: EMPTY_FIELD_ERROR
+      })
+    }
+
+    if (title === DUPLICATE_TITLE_ERROR) return
+
+    saveDeck(title)
+
+    this.setState({
+      title: '',
+      error: ''
+    })
+
+    //navigate to Home
+
+    saveDeckTitle(title)
+
+    //cleaar/update notifications
+  }
 
   render() {
     const { title, error } = this.state
@@ -37,7 +64,8 @@ class AddDeck extends Component {
         <View style={styles.formContainer}>
           <TextInput
             placeholder="Deck name"
-            style={styles.textBox}
+            placeholderTextColor={blue}
+            style={[styles.textBox, metaText]}
             value={title}
             maxLength={50}
             onChangeText={text => this.handleChange(text)}
@@ -72,8 +100,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   textBox: {
-    height: 60,
-    borderColor: gray,
+    height: 70,
+    borderColor: blue,
     borderWidth: 0.5,
     padding: 15,
     fontSize: 30
@@ -93,4 +121,13 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(AddDeck)
+const mapDispatchToProps = dispatch => {
+  return {
+    saveDeck: title => dispatch(addDeck(title))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AddDeck)
