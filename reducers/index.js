@@ -1,8 +1,12 @@
-import { ADD_CARD, ADD_DECK } from '../actions/index'
-import { initialDecks } from '../utils/_DATA'
+import { ADD_CARD, ADD_DECK, RECIEVE_DECKS } from '../actions/index'
 
-const decks = (state = initialDecks, action) => {
+const decks = (state = {}, action) => {
   switch (action.type) {
+    case RECIEVE_DECKS:
+      return {
+        ...state,
+        ...action.decks
+      }
     case ADD_DECK:
       return {
         ...state,
