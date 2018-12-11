@@ -6,6 +6,8 @@ import { gray, red } from '../utils/colors'
 import Header from './Header'
 import SubmitButton from './SubmitButton'
 
+import { buttonText, metaText } from '../utils/fonts'
+
 const DUPLICATE_TITLE_ERROR =
   'Deck with same name already exists! Please try agian.'
 
@@ -42,10 +44,14 @@ class AddDeck extends Component {
           />
           {error !== '' && (
             <View style={{ padding: 10 }}>
-              <Text style={styles.error}>{error}</Text>
+              <Text style={[metaText, styles.error]}>{error}</Text>
             </View>
           )}
-          <SubmitButton onPress={this.handleAddDeck} style={{ margin: 60 }}>
+          <SubmitButton
+            onPress={this.handleAddDeck}
+            style={{ margin: 60 }}
+            textStyle={buttonText}
+          >
             Add
           </SubmitButton>
         </View>

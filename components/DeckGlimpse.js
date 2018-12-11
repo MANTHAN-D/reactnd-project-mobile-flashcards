@@ -7,14 +7,17 @@ import {
   Platform
 } from 'react-native'
 import { white, gray } from '../utils/colors'
+import { headerText, metaText } from '../utils/fonts'
 
 const DeckGlimpse = ({ title, cardCount }) => {
   return (
     <View style={styles.deck}>
       <TouchableOpacity onPress={() => alert('Pressed')}>
         <View style={{ alignItems: 'center' }}>
-          <Text style={{ fontSize: 30, padding: 10 }}>{title}</Text>
-          <Text style={{ fontSize: 20, padding: 10 }}>
+          <Text style={[headerText, { padding: 10, fontSize: 30 }]}>
+            {title}
+          </Text>
+          <Text style={[{ padding: 10 }, metaText]}>
             {cardCount} {cardCount > 1 ? 'cards' : 'card'}
           </Text>
         </View>
