@@ -9,6 +9,7 @@ import { blue } from './utils/colors'
 
 import StatusBar from './components/StatusBar'
 import Home from './components/Home'
+import AddDeck from './components/AddDeck'
 
 const store = createStore(reducer)
 export default class App extends React.Component {
@@ -17,7 +18,8 @@ export default class App extends React.Component {
       <Provider store={store}>
         <View style={{ flex: 1 }}>
           <StatusBar backgroundColor={blue} barStyle="light-content" />
-          <Home />
+          {/* <Home /> */}
+          <AddDeck />
         </View>
       </Provider>
     )
