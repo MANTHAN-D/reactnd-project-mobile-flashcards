@@ -10,8 +10,9 @@ import { blue } from './utils/colors'
 import StatusBar from './components/StatusBar'
 import Home from './components/Home'
 import AddDeck from './components/AddDeck'
-import DeckView from './components/DeckView'
+import Deck from './components/Deck'
 import AddCard from './components/AddCard'
+import Quiz from './components/Quiz'
 
 const store = createStore(reducer)
 export default class App extends React.Component {
@@ -22,8 +23,9 @@ export default class App extends React.Component {
           <StatusBar backgroundColor={blue} barStyle="light-content" />
           {/* <Home /> */}
           {/* <AddDeck /> */}
-          {/* <DeckView title={'React'} /> */}
-          <AddCard title={'React'}/>
+          {/* <Deck title={'React'} /> */}
+          {/* <AddCard title={'React'}/> */}
+          <Quiz title={'React'} />
         </View>
       </Provider>
     )

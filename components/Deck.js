@@ -8,7 +8,7 @@ import { blue, white } from '../utils/colors'
 //Todo: implement onpress navigation for Add Card and Start Quiz
 //Todo: clean up mapStateToProps to return null
 
-const DeckView = props => {
+const Deck = props => {
   const { deck } = props
   const cardCount = deck ? deck.questions.length : 0
   return (
@@ -83,4 +83,4 @@ const mapStateToProps = (state, { title }) => {
   }
 }
 
-export default connect(mapStateToProps)(DeckView)
+export default connect(mapStateToProps)(Deck)

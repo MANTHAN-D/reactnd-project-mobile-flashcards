@@ -76,6 +76,8 @@ Project development began with quick wireframes capturing the required functiona
 
 This project was bootstraped from [create-react-native-app](https://github.com/react-community/create-react-native-app).
 
+[Flip animation in react](https://codedaily.io/screencasts/12/Create-a-Flip-Card-Animation-with-React-Native)
+
 ## Support and/or Issues, Concerns, Questions
 
 If you have any issues and/or concerns with the above project feel free to comment on Github.

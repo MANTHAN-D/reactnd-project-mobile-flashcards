@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Platform
 } from 'react-native'
-import { white, gray } from '../utils/colors'
+import { white, blue } from '../utils/colors'
 import { headerText, metaText } from '../utils/fonts'
 
 const DeckGlimpse = ({ title, cardCount }) => {
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
       height: 3
     },
     alignItems: 'stretch',
-    borderColor: gray,
+    borderColor: blue,
     borderWidth: 0.5
   }
 })
