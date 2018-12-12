@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
+import { ScrollView } from 'react-navigation'
 import { AppLoading } from 'expo'
 import { connect } from 'react-redux'
 
@@ -33,12 +34,21 @@ class Home extends Component {
       return <AppLoading />
     }
     return (
-      <View style={styles.container}>
-        <Header text={'Decks'} />
-        {Object.keys(decks).map(title => {
-          const cardCount = decks[title].questions.length
-          return <DeckGlimpse cardCount={cardCount} title={title} key={title} />
-        })}
+      <View style={{ flex: 1 }}>
+        <ScrollView contentContainerStyle={styles.container}>
+          <Header text={'Decks'} />
+          {Object.keys(decks).map(title => {
+            const cardCount = decks[title].questions.length
+            return (
+              <DeckGlimpse
+                cardCount={cardCount}
+                title={title}
+                key={title}
+                {...this.props}
+              />
+            )
+          })}
+        </ScrollView>
       </View>
     )
   }

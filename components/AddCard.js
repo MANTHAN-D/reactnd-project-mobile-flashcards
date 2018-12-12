@@ -22,8 +22,9 @@ class AddCard extends Component {
   }
 
   handleAddCard = () => {
-    const { title, saveCard } = this.props
+    const { saveCard, navigation } = this.props
     const { question, answer } = this.state
+    const { title } = navigation.state.params
 
     if (question === '' || answer === '') {
       return this.setState({
@@ -47,16 +48,14 @@ class AddCard extends Component {
       error: ''
     })
 
-    //navigate to DeckView
+    navigation.navigate('Deck', { title: title })
 
     addCardToDeck(title, info.card)
-
-    // clear/update notifications
   }
 
   render() {
     const { question, answer, error } = this.state
-    const { title } = this.props
+    const { title } = this.props.navigation.state.params
     return (
       <View styles={styles.container}>
         <Header text={title} />
@@ -123,6 +122,7 @@ const styles = StyleSheet.create({
   }
 })
 
+const mapStateToProps = () => {}
 const mapDispatchToProps = dispatch => {
   return {
     saveCard: info => dispatch(addCard(info))

@@ -6,11 +6,9 @@ import SubmitButton from './SubmitButton'
 import { buttonText, headerText, metaText } from '../utils/fonts'
 import { white, blue, orange } from '../utils/colors'
 
-//TODO Add navigation to Home
-//TODO Add navigation to Deck
-
 const Result = props => {
-  const { percentage } = props
+  const { navigation } = props
+  const { percentage, title } = navigation.state.params
   return (
     <View style={styles.container}>
       <View style={styles.resultInfo}>
@@ -20,21 +18,21 @@ const Result = props => {
       </View>
       <View style={styles.resultInfo}>
         <Text style={[headerText, styles.resultPercentText]}>
-          You scored {65}%
+          You scored {percentage}%
         </Text>
       </View>
       <View style={styles.resultActions}>
         <SubmitButton
           style={styles.backToSubmitBtn}
           textStyle={buttonText}
-          onPress={() => {}}
+          onPress={() => navigation.navigate('Deck', { title: title })}
         >
-          Back To Decks
+          Back To Deck
         </SubmitButton>
         <SubmitButton
           style={styles.startOverSubmitBtn}
           textStyle={[styles.startOverBtnTxt, buttonText]}
-          onPress={() => {}}
+          onPress={() => navigation.navigate('Quiz', { title: title })}
         >
           Start Over
         </SubmitButton>
@@ -52,7 +50,7 @@ const styles = StyleSheet.create({
     alignItems: 'stretch'
   },
   resultInfo: {
-    padding: 30
+    padding: 20
   },
   resultActions: {
     padding: 30,
@@ -61,7 +59,7 @@ const styles = StyleSheet.create({
   resultIntoText: {
     textAlign: 'center',
     padding: 20,
-    fontSize: 30,
+    fontSize: 25,
     color: orange
   },
   resultPercentText: {

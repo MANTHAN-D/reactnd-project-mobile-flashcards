@@ -66,6 +66,10 @@ OR
 yarn run android
 ```
 
+## Notes
+* App has been tested on iOS simulator.
+
+
 ## Wireframes
 
 Project development began with quick wireframes capturing the required functionalities and flows:

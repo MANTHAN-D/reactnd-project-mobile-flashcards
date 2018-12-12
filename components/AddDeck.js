@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TextInput } from 'react-native'
 import { connect } from 'react-redux'
-import { red, blue } from '../utils/colors'
+import { NavigationActions } from 'react-navigation'
 
 import Header from './Header'
 import SubmitButton from './SubmitButton'
 
+import { red, blue } from '../utils/colors'
 import { buttonText, metaText } from '../utils/fonts'
 import { addDeck } from '../actions/index'
 import { saveDeckTitle } from '../utils/api'
@@ -49,11 +50,9 @@ class AddDeck extends Component {
       error: ''
     })
 
-    //navigate to Home
+    this.props.navigation.navigate('Deck', { title: title })
 
     saveDeckTitle(title)
-
-    //cleaar/update notifications
   }
 
   render() {
@@ -115,7 +114,6 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = state => {
-  console.log(state)
   return {
     deckTitles: Object.keys(state)
   }

@@ -7,16 +7,20 @@ import {
   TouchableOpacity,
   Animated
 } from 'react-native'
+import { connect } from 'react-redux'
 
 import SubmitButton from './SubmitButton'
 
 import { headerText, metaText, buttonText } from '../utils/fonts'
 import { white, blue, red } from '../utils/colors'
+import {
+  clearLocalNotification,
+  setLocalNotification
+} from '../utils/notifications'
 
 class Quiz extends Component {
   state = {
-    totalQuestions: 3,
-    answered: 1,
+    answered: 0,
     correctAnswers: 0
   }
 
@@ -34,6 +38,16 @@ class Quiz extends Component {
       inputRange: [0, 180],
       outputRange: ['180deg', '360deg']
     })
+  }
+
+  shouldComponentUpdate = (nextProps, nextState) => {
+    return nextProps.totalQuestions !== nextState.answered
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (this.value >= 90) {
+      return this.flipCard()
+    }
   }
 
   flipCard = () => {
@@ -61,7 +75,8 @@ class Quiz extends Component {
         }
       },
       () => {
-        const { answered, totalQuestions } = this.state
+        const { answered } = this.state
+        const { totalQuestions } = this.props
         if (answered === totalQuestions) return this.toResult()
       }
     )
@@ -75,21 +90,36 @@ class Quiz extends Component {
         }
       },
       () => {
-        const { answered, totalQuestions } = this.state
+        const { answered } = this.state
+        const { totalQuestions } = this.props
         if (answered === totalQuestions) return this.toResult()
       }
     )
   }
 
   toResult = () => {
-    // navigate to Result screen
+    this.setState({
+      answered: 0,
+      correctAnswers: 0
+    })
+
+    const { navigation, totalQuestions } = this.props
+    const { correctAnswers } = this.state
+    const { title } = navigation.state.params
+
+    const percentage = ((correctAnswers * 100) / totalQuestions).toFixed(2)
+
+    navigation.navigate('Result', { title, percentage })
+
+    clearLocalNotification().then(setLocalNotification)
   }
 
   render() {
-    const { totalQuestions, answered, correctAnswers } = this.state
+    const { answered } = this.state
+    const { totalQuestions, questions } = this.props
 
-    const question = 'What is React?'
-    const answer = 'A library for managing user interfaces'
+    const question = questions[answered].question
+    const answer = questions[answered].answer
 
     const frontAnimatedStyle = {
       transform: [
@@ -238,6 +268,13 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = state => {}
+const mapStateToProps = (state, { navigation }) => {
+  const { title } = navigation.state.params
+  return {
+    title,
+    totalQuestions: state[title] ? state[title].questions.length : 0,
+    questions: state[title] ? state[title].questions : null
+  }
+}
 
-export default Quiz
+export default connect(mapStateToProps)(Quiz)

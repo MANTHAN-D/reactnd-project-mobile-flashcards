@@ -9,10 +9,12 @@ import {
 import { white, blue } from '../utils/colors'
 import { headerText, metaText } from '../utils/fonts'
 
-const DeckGlimpse = ({ title, cardCount }) => {
+const DeckGlimpse = ({ title, cardCount, navigation }) => {
   return (
     <View style={styles.deck}>
-      <TouchableOpacity onPress={() => alert('Pressed')}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Deck', { title: title })}
+      >
         <View style={{ alignItems: 'center' }}>
           <Text style={[headerText, { padding: 10, fontSize: 30 }]}>
             {title}

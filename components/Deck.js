@@ -5,16 +5,14 @@ import { connect } from 'react-redux'
 import SubmitButton from './SubmitButton'
 import { headerText, metaText, buttonText } from '../utils/fonts'
 import { blue, white } from '../utils/colors'
-//Todo: implement onpress navigation for Add Card and Start Quiz
-//Todo: clean up mapStateToProps to return null
 
 const Deck = props => {
-  const { deck } = props
+  const { title, deck, navigation } = props
   const cardCount = deck ? deck.questions.length : 0
   return (
     <View style={styles.container}>
       <View style={styles.deckInfo}>
-        <Text style={[styles.deckInfoText, headerText]}>{deck.title}</Text>
+        <Text style={[styles.deckInfoText, headerText]}>{title}</Text>
         <Text style={[styles.deckInfoText, metaText]}>
           {cardCount} {cardCount > 1 ? 'cards' : 'card'}
         </Text>
@@ -23,14 +21,18 @@ const Deck = props => {
         <SubmitButton
           style={styles.addCardSubmitBtn}
           textStyle={[styles.addCardBtnTxt, buttonText]}
-          onPress={() => {}}
+          onPress={() => navigation.navigate('AddCard', { title: title })}
         >
           Add Card
         </SubmitButton>
         <SubmitButton
           style={styles.startQuizSubmitBtn}
           textStyle={buttonText}
-          onPress={() => {}}
+          onPress={() =>
+            cardCount > 0
+              ? navigation.navigate('Quiz', { title: title })
+              : alert('Oops! No cards to start quiz.')
+          }
         >
           Start Quiz
         </SubmitButton>
@@ -74,12 +76,11 @@ const styles = StyleSheet.create({
     color: blue
   }
 })
-const mapStateToProps = (state, { title }) => {
+const mapStateToProps = (state, { navigation }) => {
+  const { title } = navigation.state.params
   return {
-    deck:
-      title && state[title]
-        ? state[title]
-        : { title: 'React', questions: [1, 3, 3] }
+    title,
+    deck: title && state[title] ? state[title] : null
   }
 }
 
