@@ -13,6 +13,7 @@ import AddDeck from './components/AddDeck'
 import Deck from './components/Deck'
 import AddCard from './components/AddCard'
 import Quiz from './components/Quiz'
+import Result from './components/Result'
 
 const store = createStore(reducer)
 export default class App extends React.Component {
@@ -25,7 +26,8 @@ export default class App extends React.Component {
           {/* <AddDeck /> */}
           {/* <Deck title={'React'} /> */}
           {/* <AddCard title={'React'}/> */}
-          <Quiz title={'React'} />
+          {/* <Quiz title={'React'} /> */}
+          <Result />
         </View>
       </Provider>
     )
